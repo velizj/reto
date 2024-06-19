@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/UrlShortenerStats
+    username: root
+    password: hello_meli
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  redis:
+    primary:
+      host: ${SPRING_REDIS1_HOST}
+      port: ${SPRING_REDIS1_PORT}
+    secondary:
+      host: ${SPRING_REDIS2_HOST}
+      port: ${SPRING_REDIS2_PORT}
+
