@@ -24,6 +24,7 @@ services:
     networks:
       - app-network
     depends_on:
+      - mysql
       - redis_primary
       - redis_secondary
     environment:
