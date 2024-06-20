@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.StatsRecord;
+import com.example.demo.domain.dto.StatsRecord;
 import com.example.demo.repository.StatsRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

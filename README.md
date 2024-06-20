@@ -83,3 +83,9 @@ Para instalar y ejecutar este proyecto localmente, sigue los siguientes pasos:
     ```bash
     docker-compose up --build app -d
     ```
+### Acceder a la Documentación de Swagger
+
+Una vez que la aplicación esté en ejecución, puedes acceder a la documentación de Swagger en la siguiente URL:
+http://localhost:8080/swagger-ui.html
+
+![Open API Definition](docs/images/swagger-doc.png)

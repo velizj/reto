@@ -1,7 +1,7 @@
 package com.example.demo.util;
 
 
-import com.example.demo.dto.UrlComponents;
+import com.example.demo.domain.dto.UrlComponents;
 import com.example.demo.exception.InvalidUrlException;
 
 import java.net.MalformedURLException;

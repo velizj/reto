@@ -5,9 +5,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.demo.dto.LongUrlResponse;
-import com.example.demo.dto.ShortUrlResponse;
-import com.example.demo.dto.UrlComponents;
+import com.example.demo.domain.dto.LongUrlResponse;
+import com.example.demo.domain.dto.ShortUrlResponse;
+import com.example.demo.domain.dto.UrlComponents;
 import com.example.demo.exception.UrlShortenerException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
