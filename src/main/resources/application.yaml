@@ -18,3 +18,16 @@ spring:
       host: ${SPRING_REDIS2_HOST}
       port: ${SPRING_REDIS2_PORT}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
