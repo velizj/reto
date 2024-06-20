@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 2
+        delay: 10s
+
+networks:
+  app-network:
+    external: true
