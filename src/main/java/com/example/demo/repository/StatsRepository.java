@@ -1,16 +1,19 @@
 package com.example.demo.repository;
 
+import com.example.demo.domain.dto.StatsRecord;
+import com.example.demo.domain.dto.UrlStatsDTO;
+import com.example.demo.util.DateTimeUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.sql.DataSource;
-
-import com.example.demo.dto.StatsRecord;
-import com.example.demo.util.DateTimeUtils;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -19,7 +22,25 @@ public class StatsRepository {
 
   private static final Logger logger = LoggerFactory.getLogger(StatsRepository.class);
 
+  private final JdbcTemplate jdbcTemplate;
+
   private final DataSource dataSource;
+
+  public List<UrlStatsDTO> getUrlStats() {
+    String sql = "SELECT long_url, short_url, COUNT(*) AS quantity FROM UrlAccessLogs GROUP BY long_url, short_url ORDER BY quantity DESC";
+    List<Object[]> rawStats = jdbcTemplate.query(sql, (rs, rowNum) -> new Object[]{
+            rs.getString("long_url"),
+            rs.getString("short_url"),
+            rs.getLong("quantity")
+    });
+
+    return rawStats.stream()
+            .map(obj -> new UrlStatsDTO(
+                    (String) obj[0],
+                    (String) obj[1],
+                    (Long) obj[2]))
+            .collect(Collectors.toList());
+  }
 
   public void saveStatToDatabase(StatsRecord statRecord) {
     LocalDateTime accessTime = DateTimeUtils.convertTimestampToLocalDateTime(statRecord.getTimestamp());

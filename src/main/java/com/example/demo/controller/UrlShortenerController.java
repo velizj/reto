@@ -1,10 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.*;
-import com.example.demo.service.StatsService;
+import static com.example.demo.util.UrlUtil.parseUrl;
+import static com.example.demo.util.UrlUtil.validateShortUrl;
+
+import com.example.demo.domain.dto.*;
+import com.example.demo.service.StatsDbService;
+import com.example.demo.service.StatsCacheService;
 import com.example.demo.service.UrlHandlerService;
 import jakarta.validation.Valid;
 import java.net.MalformedURLException;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import static com.example.demo.util.UrlUtil.parseUrl;
-import static com.example.demo.util.UrlUtil.validateShortUrl;
 
 @RestController
 @AllArgsConstructor
@@ -29,7 +32,8 @@ public class UrlShortenerController implements UrlShortenerDefintionController {
   private static final String HEADER_LOCATION = "Location";
 
   private final UrlHandlerService urlHandlerService;
-  private final StatsService statsService;
+  private final StatsCacheService statsCacheService;
+  private final StatsDbService statsDbService;
 
   @Override
   @PostMapping(value = "/shorten", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,13 +41,11 @@ public class UrlShortenerController implements UrlShortenerDefintionController {
       @RequestBody @Valid LongUrlRequest longUrlRequest) {
     String longUrl = longUrlRequest.getLongUrl();
     logger.info(REQUEST_TO_SHORTEN_URL_RECEIVED, longUrl);
-
     ShortUrlResponse response = urlHandlerService.shortenUrl(longUrl);
-
-    statsService.recordStatistics(response.getShortUrl(), longUrl);
-
+    statsCacheService.recordStatistics(response.getShortUrl(), longUrl);
     return ResponseEntity.ok(response);
   }
+
   @Override
   @PostMapping(value = "/expand", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<LongUrlResponse> expandUrl(@RequestBody ShortUrlRequest shortUrlRequest)
@@ -67,5 +69,10 @@ public class UrlShortenerController implements UrlShortenerDefintionController {
       @RequestBody DeleteShortUrlsRequest deleteShortUrlsRequest) {
     urlHandlerService.deleteUrls(deleteShortUrlsRequest.getShortUrls());
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping(value = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<UrlStatsDTO> getStatistics() {
+    return statsDbService.getUrlStats();
   }
 }

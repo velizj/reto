@@ -1,8 +1,8 @@
 package com.example.demo.util;
 
 
-import com.example.demo.dto.LongUrlResponse;
-import com.example.demo.dto.ShortUrlResponse;
+import com.example.demo.domain.dto.LongUrlResponse;
+import com.example.demo.domain.dto.ShortUrlResponse;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.ResponseEntity;
 
