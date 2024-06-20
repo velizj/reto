@@ -59,33 +59,23 @@ Este flujo muestra se recuperan las estadísticas de uso de las URLs cortas gene
 
 Para instalar y ejecutar este proyecto localmente, sigue los siguientes pasos:
 
-### Opción 1: Construcción con Gradle y luego Docker Compose
+### Construcción con Gradle y luego Docker Compose
 
 1. **Clonar el repositorio**:
     ```bash
     git clone git@github.com:velizj/reto.git
     cd reto
     ```
-
 2. **Construir el proyecto con Gradle**:
     ```bash
     ./gradlew clean build
     ```
-
-3. **Levantar los contenedores con Docker Compose**:
+3. **Construir la imagen de contenedor de la app**:
     ```bash
-    docker-compose up -d
+   docker build -t demo-app .
     ```
 
-### Opción 2: Directamente con Docker Compose
-
-1. **Clonar el repositorio**:
-    ```bash
-    git clone git@github.com:velizj/reto.git
-    cd reto
-    ```
-
-2. **Levantar los contenedores con Docker Compose**:
+4. **Levantar los contenedores con Docker Compose**:
     ```bash
     docker-compose up --build -d
     ```
