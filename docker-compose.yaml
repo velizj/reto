@@ -27,7 +27,7 @@ services:
       - redis_primary
       - redis_secondary
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_container:3306/UrlShortenerStats
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/UrlShortenerStats
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: hello_meli
       SPRING_REDIS1_HOST: redis_primary
