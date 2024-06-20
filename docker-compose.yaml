@@ -23,11 +23,6 @@ services:
       - "8080:8080"
     networks:
       - app-network
-    deploy:
-      replicas: 5
-      update_config:
-        parallelism: 2
-        delay: 10s
     depends_on:
       - redis_primary
       - redis_secondary
