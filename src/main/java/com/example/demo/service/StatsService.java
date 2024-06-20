@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-//@AllArgsConstructor
 public class StatsService {
 
   private final RedissonClient secondaryRedisClient;
