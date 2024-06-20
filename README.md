@@ -79,3 +79,7 @@ Para instalar y ejecutar este proyecto localmente, sigue los siguientes pasos:
     ```bash
     docker-compose up --build -d
     ```
+5. **Levantar solo la demo-app. Si observa no levanta la app, ejecutar este paso asicional**:
+    ```bash
+    docker-compose up --build app -d
+    ```
