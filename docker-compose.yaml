@@ -14,14 +14,20 @@ services:
       - app-network
 
   app:
+    image: demo-app:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "spring-boot-app"
+    #container_name: "demo-app"
     ports:
       - "8080:8080"
     networks:
       - app-network
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 2
+        delay: 10s
     depends_on:
       - redis_primary
       - redis_secondary
@@ -36,7 +42,7 @@ services:
 
   redis_primary:
     image: "redis:latest"
-    container_name: "redis_primary"
+    #container_name: "redis_primary"
     ports:
       - "6379:6379"
     networks:
@@ -46,7 +52,7 @@ services:
 
   redis_secondary:
     image: "redis:latest"
-    container_name: "redis_secondary"
+    #container_name: "redis_secondary"
     ports:
       - "6380:6379"
     networks:
