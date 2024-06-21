@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto;
+package com.example.demo.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
