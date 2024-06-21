@@ -3,7 +3,6 @@ package com.example.demo.util;
 
 import com.example.demo.domain.dto.UrlComponents;
 import com.example.demo.exception.InvalidUrlException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
@@ -34,7 +33,7 @@ public class UrlUtil {
     }
   }
 
-  public static String generateShortUrl() {
+  public static String generateNewShortUrl() {
     return UUID.randomUUID().toString().substring(BEGIN_INDEX, END_INDEX);
   }
 

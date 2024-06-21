@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 public class RedissonUrlCache implements UrlCache {
 
   private static final String URL_CACHE_MAP = "urlCacheMap";
-  private final RMapCache<String, String> cache;
-
   private static final String SHORT_URL_PREFIX = "shortUrl:";
   private static final String LONG_URL_PREFIX = "longUrl:";
+  private final RMapCache<String, String> cache;
 
   public RedissonUrlCache(@Qualifier("primaryRedisClient") RedissonClient redissonClient) {
     this.cache = redissonClient.getMapCache(URL_CACHE_MAP);
