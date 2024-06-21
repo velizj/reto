@@ -1,6 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.*;
+
+import com.example.demo.dto.request.DeleteShortUrlsRequest;
+import com.example.demo.dto.request.LongUrlRequest;
+import com.example.demo.dto.response.LongUrlResponse;
+import com.example.demo.dto.request.ShortUrlRequest;
+import com.example.demo.dto.response.ShortUrlResponse;
+import com.example.demo.dto.UrlStatsDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

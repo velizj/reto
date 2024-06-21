@@ -4,13 +4,13 @@ import static com.example.demo.util.UrlUtil.parseUrl;
 import static com.example.demo.util.UrlUtil.validUrlList;
 import static com.example.demo.util.UrlUtil.validateShortUrl;
 
-import com.example.demo.domain.dto.DeleteShortUrlsRequest;
-import com.example.demo.domain.dto.LongUrlRequest;
-import com.example.demo.domain.dto.LongUrlResponse;
-import com.example.demo.domain.dto.ShortUrlRequest;
-import com.example.demo.domain.dto.ShortUrlResponse;
-import com.example.demo.domain.dto.UrlComponents;
-import com.example.demo.domain.dto.UrlStatsDTO;
+import com.example.demo.dto.request.DeleteShortUrlsRequest;
+import com.example.demo.dto.request.LongUrlRequest;
+import com.example.demo.dto.response.LongUrlResponse;
+import com.example.demo.dto.request.ShortUrlRequest;
+import com.example.demo.dto.response.ShortUrlResponse;
+import com.example.demo.dto.UrlComponents;
+import com.example.demo.dto.UrlStatsDTO;
 import com.example.demo.service.StatsDbService;
 import com.example.demo.service.UrlHandlerService;
 import jakarta.validation.Valid;
@@ -50,7 +50,6 @@ public class UrlShortenerController implements UrlShortenerDefintionController {
   public ResponseEntity<LongUrlResponse> expandUrl(@RequestBody ShortUrlRequest shortUrlRequest)
       throws MalformedURLException {
     UrlComponents shortUrl = parseUrl(shortUrlRequest.getShortUrl());
-    logger.info(REQUEST_TO_EXPAND_URL_RECEIVED, shortUrlRequest.getShortUrl());
     return ResponseEntity.ok(urlHandlerService.expandUrl(shortUrl));
   }
 
