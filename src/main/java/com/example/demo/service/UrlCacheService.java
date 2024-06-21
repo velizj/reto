@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class UrlCacheService {
     urlCache.save(shortUrl, longUrl, ttl, timeUnit);
   }
 
-  public String getLongUrl(String shortUrl) {
-    return urlCache.getLongUrl(shortUrl);
+  public Optional<String> getLongUrl(String shortUrl) {
+    return Optional.ofNullable(urlCache.getLongUrl(shortUrl));
   }
 
   public String getShortUrl(String longUrl) {

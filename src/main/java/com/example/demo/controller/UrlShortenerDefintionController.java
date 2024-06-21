@@ -95,5 +95,5 @@ public interface UrlShortenerDefintionController {
         @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content),
         @ApiResponse(responseCode = "404", description = "Url not found", content = @Content)
       })
-  List<UrlStatsDTO> getStatistics();
+  ResponseEntity<List<UrlStatsDTO>> getStatistics();
 }

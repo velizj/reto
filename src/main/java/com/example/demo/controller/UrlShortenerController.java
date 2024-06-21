@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import static com.example.demo.util.UrlUtil.parseUrl;
+import static com.example.demo.util.UrlUtil.validUrlList;
 import static com.example.demo.util.UrlUtil.validateShortUrl;
 
 import com.example.demo.domain.dto.DeleteShortUrlsRequest;
@@ -65,12 +66,18 @@ public class UrlShortenerController implements UrlShortenerDefintionController {
   @DeleteMapping("/shorturls")
   public ResponseEntity<Void> deleteMultipleUrls(
       @RequestBody DeleteShortUrlsRequest deleteShortUrlsRequest) {
+    validUrlList(deleteShortUrlsRequest.getShortUrls());
     urlHandlerService.deleteUrls(deleteShortUrlsRequest.getShortUrls());
     return ResponseEntity.noContent().build();
   }
 
+  @Override
   @GetMapping(value = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<UrlStatsDTO> getStatistics() {
-    return statsDbService.getUrlStats();
+  public ResponseEntity<List<UrlStatsDTO>> getStatistics() {
+    List<UrlStatsDTO> stats = statsDbService.getUrlStats();
+    if (stats.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(stats);
   }
 }
