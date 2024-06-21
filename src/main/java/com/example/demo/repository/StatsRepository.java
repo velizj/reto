@@ -1,7 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.dto.StatsRecord;
-import com.example.demo.domain.dto.UrlStatsDTO;
+import com.example.demo.dto.StatsRecord;
+import com.example.demo.dto.UrlStatsDTO;
 import com.example.demo.util.DateTimeUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

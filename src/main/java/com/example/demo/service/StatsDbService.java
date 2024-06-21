@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.UrlStatsDTO;
+import com.example.demo.dto.UrlStatsDTO;
 import com.example.demo.repository.StatsRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;

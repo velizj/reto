@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RedissonConfig {
 
+  private static final String REDIS = "redis://";
+
   @Value("${spring.redis.primary.host}")
   private String primaryRedisHost;
 
@@ -21,14 +23,15 @@ public class RedissonConfig {
 
   @Value("${spring.redis.secondary.port}")
   private int secondaryRedisPort;
+
   @Bean(name = "primaryRedisClient")
   public RedissonClient primaryRedisClient() {
     Config config = new Config();
     config
-            .useSingleServer()
-            .setAddress("redis://" + primaryRedisHost + ":" + primaryRedisPort)
-            .setConnectionPoolSize(10)
-            .setConnectionMinimumIdleSize(1);
+        .useSingleServer()
+        .setAddress(REDIS + primaryRedisHost + ":" + primaryRedisPort)
+        .setConnectionPoolSize(10)
+        .setConnectionMinimumIdleSize(1);
 
     return Redisson.create(config);
   }
@@ -37,10 +40,10 @@ public class RedissonConfig {
   public RedissonClient secondaryRedisClient() {
     Config config = new Config();
     config
-            .useSingleServer()
-            .setAddress("redis://" + secondaryRedisHost + ":" + secondaryRedisPort)
-            .setConnectionPoolSize(10)
-            .setConnectionMinimumIdleSize(1);
+        .useSingleServer()
+        .setAddress(REDIS + secondaryRedisHost + ":" + secondaryRedisPort)
+        .setConnectionPoolSize(10)
+        .setConnectionMinimumIdleSize(1);
 
     return Redisson.create(config);
   }

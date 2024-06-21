@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.exception.InvalidUrlException;
 import com.example.demo.exception.UrlNotFoundException;
+import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,16 @@ public class UrlShortenerControllerAdvice extends ResponseEntityExceptionHandler
     body.put(ERROR, HttpStatus.NOT_FOUND.getReasonPhrase());
     body.put(MESSAGE, ex.getMessage());
     return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(MalformedURLException.class)
+  public ResponseEntity<Object> handleMalformedURLException(MalformedURLException ex) {
+    Map<String, Object> body = new HashMap<>();
+    body.put(TIMESTAMP, LocalDateTime.now());
+    body.put(STATUS, HttpStatus.BAD_REQUEST.value());
+    body.put(ERROR, HttpStatus.BAD_REQUEST.getReasonPhrase());
+    body.put(MESSAGE, ex.getMessage());
+    return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(Exception.class)
