@@ -14,7 +14,7 @@ public class StatsDbService {
   public List<UrlStatsDTO> getUrlStats() {
     List<UrlStatsDTO> rawStats = statsRepository.getUrlStats();
     return rawStats.stream()
-        .map(obj -> new UrlStatsDTO(obj.getShortUrl(), obj.getLongUrl(), obj.getQuantity()))
+        .map(obj -> new UrlStatsDTO(obj.getLongUrl(), obj.getShortUrl(), obj.getQuantity()))
         .toList();
   }
 }

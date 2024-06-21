@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
-import static com.example.demo.util.UrlUtil.cleanPath;
 import static com.example.demo.util.UrlUtil.generateNewShortUrl;
 import static com.example.demo.util.UrlUtil.parseUrl;
 
 import com.example.demo.domain.dto.LongUrlResponse;
 import com.example.demo.domain.dto.ShortUrlResponse;
 import com.example.demo.domain.dto.UrlComponents;
+import com.example.demo.exception.UrlNotFoundException;
 import com.example.demo.exception.UrlShortenerException;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -42,7 +42,7 @@ public class UrlHandlerService {
   }
 
   public LongUrlResponse expandUrl(UrlComponents shortUrl) {
-    try {
+    /*    try {
       // todo: validar shortUrl?
       String longUrl = urlCacheService.getLongUrl(cleanPath(shortUrl.getPath()));
       if (longUrl == null) {
@@ -52,20 +52,18 @@ public class UrlHandlerService {
       return LongUrlResponse.builder().longUrl(longUrl).build();
     } catch (Exception e) {
       throw new UrlShortenerException(ERROR_EXPANDING_URL + e.getMessage());
-    }
+    }*/
+    return null;
   }
 
   public String expandUrl(String shortUrl) {
-    try {
-      // todo: validar shortUrl?
-      String longUrl = urlCacheService.getLongUrl(shortUrl);
-      if (longUrl == null) {
-        throw new UrlShortenerException(URL_NOT_FOUND + URL_BASE_MELI + shortUrl);
-      }
-      return longUrl;
-    } catch (Exception e) {
-      throw new UrlShortenerException(ERROR_EXPANDING_URL + e.getMessage());
-    }
+    return urlCacheService
+        .getLongUrl(shortUrl)
+        .orElseGet(
+            () -> {
+              logger.error(URL_NOT_FOUND, shortUrl);
+              throw new UrlNotFoundException(URL_NOT_FOUND + URL_BASE_MELI + shortUrl);
+            });
   }
 
   public void deleteUrls(List<String> shortUrls) {
