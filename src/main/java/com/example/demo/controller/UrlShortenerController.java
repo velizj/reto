@@ -3,14 +3,18 @@ package com.example.demo.controller;
 import static com.example.demo.util.UrlUtil.parseUrl;
 import static com.example.demo.util.UrlUtil.validateShortUrl;
 
-import com.example.demo.domain.dto.*;
+import com.example.demo.domain.dto.DeleteShortUrlsRequest;
+import com.example.demo.domain.dto.LongUrlRequest;
+import com.example.demo.domain.dto.LongUrlResponse;
+import com.example.demo.domain.dto.ShortUrlRequest;
+import com.example.demo.domain.dto.ShortUrlResponse;
+import com.example.demo.domain.dto.UrlComponents;
+import com.example.demo.domain.dto.UrlStatsDTO;
 import com.example.demo.service.StatsDbService;
-import com.example.demo.service.StatsCacheService;
 import com.example.demo.service.UrlHandlerService;
 import jakarta.validation.Valid;
 import java.net.MalformedURLException;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +29,11 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class UrlShortenerController implements UrlShortenerDefintionController {
   private static final Logger logger = LoggerFactory.getLogger(UrlShortenerController.class);
-  private static final String REQUEST_TO_SHORTEN_URL_RECEIVED =
-      "Request to shorten URL received: {} ";
   private static final String REQUEST_TO_EXPAND_URL_RECEIVED =
-      "Request to shorten URL received: {} ";
+      "Request to expand URL received: {} ";
   private static final String HEADER_LOCATION = "Location";
 
   private final UrlHandlerService urlHandlerService;
-  private final StatsCacheService statsCacheService;
   private final StatsDbService statsDbService;
 
   @Override
@@ -40,10 +41,7 @@ public class UrlShortenerController implements UrlShortenerDefintionController {
   public ResponseEntity<ShortUrlResponse> shortenUrl(
       @RequestBody @Valid LongUrlRequest longUrlRequest) {
     String longUrl = longUrlRequest.getLongUrl();
-    logger.info(REQUEST_TO_SHORTEN_URL_RECEIVED, longUrl);
-    ShortUrlResponse response = urlHandlerService.shortenUrl(longUrl);
-    statsCacheService.recordStatistics(response.getShortUrl(), longUrl);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(urlHandlerService.shortenUrl(longUrl));
   }
 
   @Override
