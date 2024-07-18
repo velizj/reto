@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM amazoncorretto:17 AS build
 
 WORKDIR /app
 
@@ -6,9 +6,11 @@ COPY build.gradle settings.gradle gradlew ./
 COPY gradle ./gradle
 COPY src ./src
 
+RUN chmod +x gradlew
+
 RUN ./gradlew build --no-daemon
 
-FROM eclipse-temurin:17-jdk-alpine
+FROM amazoncorretto:17
 
 WORKDIR /app
 
